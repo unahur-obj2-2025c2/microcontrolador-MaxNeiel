@@ -1,8 +1,8 @@
 package ar.unahur.edu.obj2.patroncommand.microcontrolador;
 
+import ar.unahur.edu.obj2.patroncommand.operaciones.Comando;
 import ar.unahur.edu.obj2.patroncommand.operaciones.Operable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,11 +11,17 @@ public class Microcontrolador implements Programable {
     private Integer acumuladorB = 0;
     private Integer programCounter = 0;
     private List<Integer> memoria = Arrays.asList(new Integer[1024]);
-
+    private Operable lastOperation = null;
 
     @Override
     public void run(List<Operable> operaciones) {
+        lastOperation = operaciones.getLast();
         operaciones.forEach(op -> op.execute(this));
+    }
+
+    @Override
+    public void undoLastOperation() {
+        lastOperation.undo(this);
     }
 
     @Override

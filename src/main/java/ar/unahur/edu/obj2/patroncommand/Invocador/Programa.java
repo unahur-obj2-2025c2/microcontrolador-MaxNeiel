@@ -38,4 +38,5 @@ public class Programa {
     public void agregarOperacionLod(int addr) {
         operaciones.add(new Lod(addr));
     }
+
 }

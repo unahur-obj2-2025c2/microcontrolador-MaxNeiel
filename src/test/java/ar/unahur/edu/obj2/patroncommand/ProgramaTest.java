@@ -3,6 +3,8 @@ package ar.unahur.edu.obj2.patroncommand;
 import ar.unahur.edu.obj2.patroncommand.Invocador.Programa;
 import ar.unahur.edu.obj2.patroncommand.microcontrolador.Microcontrolador;
 import ar.unahur.edu.obj2.patroncommand.microcontrolador.Programable;
+import ar.unahur.edu.obj2.patroncommand.operaciones.Lodv;
+import ar.unahur.edu.obj2.patroncommand.operaciones.Swap;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,5 +64,28 @@ public class ProgramaTest {
         assertEquals(15, micro.getAcumuladorA());
         assertEquals(0, micro.getAcumuladorB());
         assertEquals(9, micro.getProgramCounter());
+    }
+
+    @Test
+    public void VuelveAValoresPreviosAlDeshacer(){
+        Programa programa = new Programa();
+        Programable micro = new Microcontrolador();
+
+        programa.agregarOperacionLodv(10);
+        programa.agregarOperacionSwap();
+        programa.agregarOperacionLodv(20);
+
+        programa.run(micro);
+
+        Integer valAcumuladorAprevio =  micro.getAcumuladorA();
+        Integer valAcumuladorBprevio =  micro.getAcumuladorB();
+        
+        programa.agregarOperacionSwap();
+        programa.run(micro);
+
+        micro.undoLastOperation();
+
+        assertEquals(valAcumuladorAprevio, micro.getAcumuladorA());
+
     }
 }
