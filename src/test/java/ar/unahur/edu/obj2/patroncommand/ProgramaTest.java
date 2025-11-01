@@ -79,13 +79,12 @@ public class ProgramaTest {
 
         Integer valAcumuladorAprevio =  micro.getAcumuladorA();
         Integer valAcumuladorBprevio =  micro.getAcumuladorB();
-        
+
         programa.agregarOperacionSwap();
         programa.run(micro);
 
         micro.undoLastOperation();
 
         assertEquals(valAcumuladorAprevio, micro.getAcumuladorA());
-
     }
 }
